@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>zeebe_demo</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.AI.TextAnalytics" Version="5.1.0" />
+    <PackageReference Include="Azure.Core" Version="1.19.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Zeebe.Client.Bootstrap">
+      <HintPath>C:\Projects\zeebe-client-csharp-bootstrap\src\Zeebe.Client.Bootstrap\bin\Debug\net5.0\Zeebe.Client.Bootstrap.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\zeebe-client-csharp-bootstrap\src\Zeebe.Client.Bootstrap\Zeebe.Client.Bootstrap.csproj" />
+    <ProjectReference Include="..\zeebe-demo-livingdocumentation\dist\Adapters\Generated\src\Adapters.Generated.Rest\Adapters.Generated.Rest.csproj" />
+  </ItemGroup>
+
+</Project>
