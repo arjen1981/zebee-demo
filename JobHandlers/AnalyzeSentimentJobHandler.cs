@@ -21,16 +21,8 @@ namespace zeebe_demo.JobHandlers
 
             var response = await client.AnalyzeSentimentAsync(state.Review);
 
-            state.NegativeSentiment = IsSentimentNegative(response.Value);
+            state.Sentiment = response.Value.Sentiment.ToString();
             return state;
-        }
-
-        private bool? IsSentimentNegative(DocumentSentiment analysis)
-        {
-            if(analysis.Sentiment < TextSentiment.Negative)
-                return true;
-
-            return false;
         }
     }
 }
