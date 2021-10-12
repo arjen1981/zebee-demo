@@ -19,9 +19,9 @@ namespace zeebe_demo.JobHandlers
                 new Uri("https://sentiment-cog.cognitiveservices.azure.com/"),
                 new AzureKeyCredential("cd24d23f33794a2cb1495a8371011f8a"));
 
-            var response = await client.AnalyzeSentimentAsync(job.State.Review);
+            var response = await client.AnalyzeSentimentAsync(state.Review);
 
-            state.Negative = IsSentimentNegative(response.Value);
+            state.NegativeSentiment = IsSentimentNegative(response.Value);
             return state;
         }
 
