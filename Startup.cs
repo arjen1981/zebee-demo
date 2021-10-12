@@ -27,7 +27,7 @@ namespace zeebe_demo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.BootstrapZeebe(Configuration.GetSection("Zeebe"), "zeebe_demo");
+            services.BootstrapZeebe(Configuration.GetSection("Zeebe"), typeof(Startup).Assembly);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

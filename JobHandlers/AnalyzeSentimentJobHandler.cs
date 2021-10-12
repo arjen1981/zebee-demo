@@ -5,23 +5,32 @@ using zeebe_demo.Jobs;
 using Azure;
 using Azure.AI.TextAnalytics;
 using System;
+using zebee_demo;
 
 namespace zeebe_demo.JobHandlers
 {
-    public class AnalyzeSentimentJobHandler : IAsyncJobHandler<AnalyzeSentimentJob, SentimentResult>
+    public class AnalyzeSentimentJobHandler : IAsyncJobHandler<AnalyzeSentimentJob, ProcessState>
     {
-        public async Task<SentimentResult> HandleJob(AnalyzeSentimentJob job, CancellationToken cancellationToken)
+        public async Task<ProcessState> HandleJob(AnalyzeSentimentJob job, CancellationToken cancellationToken)
         {
+            var state = job.State;
+
             var client = new TextAnalyticsClient(
                 new Uri("https://sentiment-cog.cognitiveservices.azure.com/"),
                 new AzureKeyCredential("cd24d23f33794a2cb1495a8371011f8a"));
 
-            DocumentSentiment documentSentiment = await client.AnalyzeSentimentAsync(job.Variables);
+            var response = await client.AnalyzeSentimentAsync(job.State.Review);
 
-            return new SentimentResult
-            {
-                Sentiment = (SentimentResult.TextSentiment)documentSentiment.Sentiment
-            };
+            state.Negative = IsSentimentNegative(response.Value);
+            return state;
+        }
+
+        private bool? IsSentimentNegative(DocumentSentiment analysis)
+        {
+            if(analysis.Sentiment < TextSentiment.Negative)
+                return true;
+
+            return false;
         }
     }
 }

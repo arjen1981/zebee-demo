@@ -1,14 +1,11 @@
-﻿using Zeebe.Client.Api.Responses;
+﻿using zebee_demo;
+using Zeebe.Client.Api.Responses;
 using Zeebe.Client.Bootstrap.Abstractions;
-using Zeebe.Client.Bootstrap.Attributes;
 
 namespace zeebe_demo.Jobs
 {
-    [FetchVariables("review")]
-    public class AnalyzeSentimentJob : AbstractJob
+    public class AnalyzeSentimentJob : AbstractJob<ProcessState>
     {
-        public AnalyzeSentimentJob(IJob job) : base(job)
-        {
-        }
+        public AnalyzeSentimentJob(IJob job, ProcessState state) : base(job, state) { }
     }
 }

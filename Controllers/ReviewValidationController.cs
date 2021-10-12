@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
-using Adapters.Generated.Rest.Controllers;
-using Adapters.Generated.Rest.Models;
+using Adapters.Rest.Generated.Controllers;
+using Adapters.Rest.Generated.Models;
 using Microsoft.AspNetCore.Mvc;
 using Zeebe.Client;
 
@@ -23,14 +23,8 @@ namespace zeebe_demo.Controllers
 
         public override async Task<IActionResult> ValidateReview([FromBody] RegisterReview registerReview)
         {
-            /*await zeebeClient.NewPublishMessageCommand().MessageName("Message_ReviewRecieved")
-                .CorrelationKey("1")
-                .MessageId("1")
-                .Variables(registerReview.ToJson())
-                .Send();*/
-
-
-            await this.client.NewCreateProcessInstanceCommand().BpmnProcessId("Process_ReviewValidation").LatestVersion()
+            await this.client.NewCreateProcessInstanceCommand()
+                .BpmnProcessId("Process_ReviewValidation").LatestVersion()
                 .Variables(registerReview.ToJson())
                 .Send();
             
