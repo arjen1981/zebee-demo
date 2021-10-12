@@ -20,9 +20,11 @@ namespace zeebe_demo.JobHandlers
                 new AzureKeyCredential("cd24d23f33794a2cb1495a8371011f8a"));
 
             var response = await client.AnalyzeSentimentAsync(state.Review);
-
-            state.Sentiment = response.Value.Sentiment.ToString();
-            return state;
+            
+            return new ProcessState()
+            {
+                Sentiment = response.Value.Sentiment.ToString()
+            };
         }
     }
 }

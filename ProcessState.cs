@@ -4,5 +4,6 @@ namespace zebee_demo
     {
         public string Review { get; set; }
         public string Sentiment { get; set; }
+        public bool? AcceptReview { get; set; }
     }
 }
