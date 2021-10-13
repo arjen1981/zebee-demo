@@ -19,8 +19,11 @@ namespace zeebe_demo.JobHandlers
                 new Uri("https://sentiment-cog.cognitiveservices.azure.com/"),
                 new AzureKeyCredential("cd24d23f33794a2cb1495a8371011f8a"));
 
+            // Todo Exception (no internet)
+            // Todo How to triger mixed or neutral with TextAnalyticsClient
+
             var response = await client.AnalyzeSentimentAsync(state.Review);
-            
+
             return new ProcessState()
             {
                 Sentiment = response.Value.Sentiment.ToString()

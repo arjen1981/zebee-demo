@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Adapters.Rest.Generated.Controllers;
 using Adapters.Rest.Generated.Models;
@@ -12,17 +13,18 @@ namespace zeebe_demo.Controllers
     {
         private readonly IZeebeClient client;
         private readonly IZeebeVariablesSerializer serializer;
+        private readonly StorageService storage;
 
-        public ReviewValidationController(IZeebeClient client, IZeebeVariablesSerializer serializer)
+        public ReviewValidationController(IZeebeClient client, IZeebeVariablesSerializer serializer, StorageService storage)
         {
             this.client = client ?? throw new System.ArgumentNullException(nameof(client));
             this.serializer = serializer ?? throw new System.ArgumentNullException(nameof(serializer));
+            this.storage = storage;
         }
 
-        public override Task<IActionResult> GetReviews()
+        public override async Task<IActionResult> GetReviews()
         {
-            
-            throw new System.NotImplementedException();
+            return Ok(storage.acceptedReviews.Select(item => item.Review));
         }
 
         public override async Task<IActionResult> ValidateReview([FromBody] RegisterReview registerReview)

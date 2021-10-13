@@ -28,11 +28,12 @@ namespace zeebe_demo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //Deze is nodig om niet waarden met null te overschrijven.
+            //Deze is nodig om niet waarden met null te overschrijven. ToDo: nullable in open api spec
             services.AddSingleton(new JsonSerializerOptions() {
                 IgnoreNullValues = true
             });
             services.BootstrapZeebe(Configuration.GetSection("Zeebe"), typeof(Startup).Assembly);
+            services.AddSingleton(new StorageService());
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
