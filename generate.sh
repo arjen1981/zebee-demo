@@ -4,7 +4,7 @@ find . -type d -name "Adapters.Rest.Generated" | xargs rm -rf
 mkdir Adapters.Rest.Generated
 
 docker run --rm --user "$(id -u):$(id -g)" -v "${PWD}:/local" openapitools/openapi-generator-cli generate \
-    -i https://raw.githubusercontent.com/arjen1981/zeebe-demo-livingdocumentation/feature/review-validation/docs/openapi.yaml \
+    -i https://raw.githubusercontent.com/arjen1981/zeebe-demo-livingdocumentation/main/docs/openapi.yaml \
     -g aspnetcore \
     -o /local/.generated \
     --additional-properties=aspnetCoreVersion=5.0,buildTarget=library,operationIsAsync=true,operationResultTask=true,packageName=Adapters.Rest.Generated,swashbuckleVersion=5.0.0

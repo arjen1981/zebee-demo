@@ -19,7 +19,6 @@ namespace zeebe_demo.JobHandlers
         {
             var review = job.State;
             this.storage.StoreRejectedReview(review);
-
             return Task.CompletedTask;
         }
     }

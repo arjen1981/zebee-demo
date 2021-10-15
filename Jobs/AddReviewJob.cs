@@ -1,4 +1,4 @@
-﻿using zebee_demo;
+﻿using zebee_demo.Models;
 using Zeebe.Client.Api.Responses;
 using Zeebe.Client.Bootstrap.Abstractions;
 
