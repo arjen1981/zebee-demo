@@ -17,8 +17,11 @@ namespace zeebe_demo.JobHandlers
 
         public Task HandleJob(AddRejectedReviewJob job, CancellationToken cancellationToken)
         {
-            var review = job.State;
-            this.storage.StoreRejectedReview(review);
+            if(job.State.ValidationResult?.Equals("Rejected") == true)
+                this.storage.StoredReview("Review rejected by moderator");
+            else 
+                this.storage.StoredReview($"Review rejected because sentiment was {job.State.Sentiment}.");
+
             return Task.CompletedTask;
         }
     }

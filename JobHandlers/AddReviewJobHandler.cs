@@ -17,8 +17,7 @@ namespace zeebe_demo.JobHandlers
 
         public Task HandleJob(AddReviewJob job, CancellationToken cancellationToken)
         {
-            var review = job.State;
-            this.storage.StoreAcceptedReview(review);
+            this.storage.StoredReview(job.State.Review);
             return Task.CompletedTask;
         }
     }
