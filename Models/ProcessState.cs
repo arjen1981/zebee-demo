@@ -1,4 +1,4 @@
-namespace zebee_demo
+namespace zebee_demo.Models
 {
     public class ProcessState
     {

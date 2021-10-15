@@ -5,7 +5,7 @@ using zeebe_demo.Jobs;
 using Azure;
 using Azure.AI.TextAnalytics;
 using System;
-using zebee_demo;
+using zebee_demo.Models;
 
 namespace zeebe_demo.JobHandlers
 {

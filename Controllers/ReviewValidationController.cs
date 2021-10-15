@@ -1,11 +1,10 @@
-using System.Linq;
 using System.Threading.Tasks;
 using Adapters.Rest.Generated.Controllers;
 using Adapters.Rest.Generated.Models;
 using Microsoft.AspNetCore.Mvc;
-using zebee_demo;
 using Zeebe.Client;
 using Zeebe.Client.Bootstrap.Abstractions;
+using zeebe_demo.Services;
 
 namespace zeebe_demo.Controllers
 {
@@ -19,24 +18,18 @@ namespace zeebe_demo.Controllers
         {
             this.client = client ?? throw new System.ArgumentNullException(nameof(client));
             this.serializer = serializer ?? throw new System.ArgumentNullException(nameof(serializer));
-            this.storage = storage;
+            this.storage = storage ?? throw new System.ArgumentNullException(nameof(storage));
         }
 
-        public override async Task<IActionResult> GetReviews()
-        {
-            return Ok(storage.acceptedReviews.Select(item => item.Review));
-        }
+        public override Task<IActionResult> GetReviews() => Task.FromResult<IActionResult>(
+            Ok(storage.Reviews)
+        );
 
         public override async Task<IActionResult> ValidateReview([FromBody] RegisterReview registerReview)
         {
-            var state = new ProcessState()
-            {
-                Review = registerReview.Review
-            };
-
             await this.client.NewCreateProcessInstanceCommand()
                 .BpmnProcessId("Process_ReviewValidation").LatestVersion()
-                .Variables(serializer.Serialize(state))
+                .Variables(serializer.Serialize(new { registerReview.Review }))
                 .Send();
             
             return Accepted();
