@@ -3,7 +3,7 @@ using Adapters.Rest.Generated.Controllers;
 using Adapters.Rest.Generated.Models;
 using Microsoft.AspNetCore.Mvc;
 using Zeebe.Client;
-using Zeebe.Client.Bootstrap.Abstractions;
+using Zeebe.Client.Bootstrap.Extensions;
 using zeebe_demo.Services;
 
 namespace zeebe_demo.Controllers
@@ -11,13 +11,11 @@ namespace zeebe_demo.Controllers
     public class ReviewValidationController : ReviewsApiController
     {
         private readonly IZeebeClient client;
-        private readonly IZeebeVariablesSerializer serializer;
         private readonly StorageService storage;
 
-        public ReviewValidationController(IZeebeClient client, IZeebeVariablesSerializer serializer, StorageService storage)
+        public ReviewValidationController(IZeebeClient client, StorageService storage)
         {
             this.client = client ?? throw new System.ArgumentNullException(nameof(client));
-            this.serializer = serializer ?? throw new System.ArgumentNullException(nameof(serializer));
             this.storage = storage ?? throw new System.ArgumentNullException(nameof(storage));
         }
 
@@ -29,7 +27,7 @@ namespace zeebe_demo.Controllers
         {
             await this.client.NewCreateProcessInstanceCommand()
                 .BpmnProcessId("Process_ReviewValidation").LatestVersion()
-                .Variables(serializer.Serialize(new { registerReview.Review }))
+                .State(new { registerReview.Review })
                 .Send();
             
             return Accepted();
