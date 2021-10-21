@@ -3,7 +3,6 @@ using Adapters.Rest.Generated.Controllers;
 using Adapters.Rest.Generated.Models;
 using Microsoft.AspNetCore.Mvc;
 using Zeebe.Client;
-using Zeebe.Client.Bootstrap.Abstractions;
 using Zeebe.Client.Bootstrap.Extensions;
 using zeebe_demo.Services;
 
